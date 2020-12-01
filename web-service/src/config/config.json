@@ -9,5 +9,8 @@
     "pbiUsername": "pbiembed@siddharthorg.onmicrosoft.com",
     "pbiPassword": "pbie@19org",
     "clientSecret": "",
-    "tenantId": ""
+    "tenantId": "",
+    "dashboardId":"d461e7b2-303e-43a7-af96-7e6f2aa18307",
+    "tileID":"ffb4f3a0-1d35-49e1-944f-244da0cfe5ff"
+
 }

@@ -29,8 +29,8 @@ function App() {
         </nav>
         <Switch>
           <Route path="/report" component={Report}></Route>
-          {/* <Route path="/dashboard" component={Dashboard}></Route> */}
-          {/* <Route path="/tile" component={Tile}></Route> */}
+          <Route path="/dashboard" component={Dashboard}></Route>
+          <Route path="/tile" component={Tile}></Route>
           <Route path="**" render={() => <Redirect to="/report" />}></Route>
         </Switch>
       </Router>

@@ -1,5 +1,7 @@
 let path = require('path');
 let embedToken = require(__dirname + '/service/embedTokenGeneration.js');
+let dashEmbedToken=require("./service/dashboardTokenGen")
+const tileEmbedToken=require("./service/tileTokenGeneration")
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors =require('cors')
@@ -28,6 +30,25 @@ app.get('/getEmbedToken', async function(req, res) {
     let result = await embedToken.generateEmbedToken();
 
     // result.status specified the statusCode that will be sent along with the result object
+    res.status(result.status).send(result);
+});
+
+app.get('/getDashEmbedToken', async function(req, res) {
+
+    // Get the details like Embed URL, Access token and Expiry
+    let result = await dashEmbedToken.generateEmbedToken();
+
+    // result.status specified the statusCode that will be sent along with the result object
+    
+    res.status(result.status).send(result);
+});
+app.get('/getTileEmbedToken', async function(req, res) {
+
+    // Get the details like Embed URL, Access token and Expiry
+    let result = await tileEmbedToken.generateEmbedToken();
+
+    // result.status specified the statusCode that will be sent along with the result object
+    
     res.status(result.status).send(result);
 });
 

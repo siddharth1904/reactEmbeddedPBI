@@ -20,9 +20,9 @@ export class Dashboards extends Component {
     }
     
     getData=()=>{
-        axios.get("http://localhost:5300/getEmbedToken").then((success)=>{
+        axios.get("http://localhost:5300/getDashEmbedToken").then((success)=>{
             console.log(success.data);
-            this.setState({accessToken:success.data.accessToken,embedUrl:success.data.embedUrl,embedId:success.data.embedId})
+            this.setState({accessToken:success.data.accessToken,embedUrl:success.data.embedUrl,embedId:success.data.embedData.id})
         }).catch((error)=>{
             this.setState({error:"Error Occurred"})
         })

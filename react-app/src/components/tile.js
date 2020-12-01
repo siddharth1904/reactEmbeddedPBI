@@ -21,10 +21,10 @@ export class Tiles extends Component {
     }
     
     getData=()=>{
-        axios.get("http://localhost:5300/getEmbedToken").then((success)=>{
+        axios.get("http://localhost:5300/getTileEmbedToken").then((success)=>{
             console.log(success.data);
             this.setState({accessToken:success.data.accessToken,embedUrl:success.data.embedUrl,
-                dashboardId:success.data.dashboardId,embedId:success.data.embedId})
+                embedId:success.data.embedData.id})
         }).catch((error)=>{
             this.setState({error:"Error Occurred"})
         })
@@ -40,7 +40,7 @@ export class Tiles extends Component {
                                 accessToken={this.state.accessToken}
                                 embedUrl={this.state.embedUrl}
                                 embedId={this.state.embedId}
-                                dashboardId={this.state.dashboardId}
+                                dashboardId="d461e7b2-303e-43a7-af96-7e6f2aa18307"
                                 style={this.state.style}/>:null}
                     </div>
             </div>

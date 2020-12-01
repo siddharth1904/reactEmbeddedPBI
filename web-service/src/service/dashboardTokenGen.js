@@ -3,8 +3,8 @@ let config = require("../config/config.json");
 let utils = require("../utilities/validateConfig.js");
 const fetch = require('node-fetch');
 
-async function getReportEmbedDetails(token, workspaceId, reportId) {
-    const reportUrl = "https://api.powerbi.com/v1.0/myorg/groups/" + workspaceId + "/reports/" + reportId;
+async function getDashboardEmbedDetails(token, dashboardId) {
+    const reportUrl = `https://api.powerbi.com/v1.0/myorg/dashboards/${dashboardId}`
     // const reportUrl = "https://api.powerbi.com/v1.0/myorg/reports/" + reportId;
     const headers = {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -16,27 +16,22 @@ async function getReportEmbedDetails(token, workspaceId, reportId) {
         method: 'GET',
         headers: headers,
     })
+
     if (!result.ok)
         throw result;
     return result.json();
 }
 
-async function getReportEmbedToken(token, embedData) {
-    console.log(embedData.datasetId,embedData)
-
-    const embedTokenUrl = "https://api.powerbi.com/v1.0/myorg/GenerateToken";
+async function getDashboardEmbedToken(token, embedData, workspaceId) {
+    console.log(embedData)
+    const embedTokenUrl = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/dashboards/${embedData.id}/GenerateToken`;
     const headers = {
         "Content-Type": "application/json",
         "Authorization": utils.getAuthHeader(token)
     };
 
     const formData = {
-        "datasets": [{
-            "id": embedData.datasetId
-        }],
-        "reports": [{
-            "id": embedData.id
-        }]
+        "accessLevel":"View",
     };
 
     // Used node-fetch to call the PowerBI REST API
@@ -89,21 +84,23 @@ async function generateEmbedToken() {
 
     // Call the function to get the Report Embed details
     try {
-        embedData = await getReportEmbedDetails(token, config.workspaceId, config.reportId);
-
+        embedData = await getDashboardEmbedDetails(token, config.dashboardId);
+        // console.log(embedData)
         // Call the function to get the Embed Token
-        let embedToken = await getReportEmbedToken(token, embedData);
+        let embedToken = await getDashboardEmbedToken(token, embedData, config.workspaceId);
         return {
             "accessToken": embedToken.token,
             "embedUrl": embedData.embedUrl,
             "expiry": embedToken.expiration,
             "status": 200,
-            "tokenId":embedToken.tokenId,
-            "embedData":embedData      };
+            "tokenId": embedToken.tokenId,
+            "embedData": embedData
+        };
     } catch (err) {
+        console.log(err)
         return {
             "status": err.status,
-            "error": 'Error while retrieving report embed details\r\n' + err.statusText + '\r\nRequestId: \n' + err.headers.get('requestid')
+            "error": 'Error while retrieving report embed details\r\n' + err.statusText + '\r\nRequestId: \n'
         }
     }
 }

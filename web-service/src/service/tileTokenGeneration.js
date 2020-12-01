@@ -3,9 +3,8 @@ let config = require("../config/config.json");
 let utils = require("../utilities/validateConfig.js");
 const fetch = require('node-fetch');
 
-async function getReportEmbedDetails(token, workspaceId, reportId) {
-    const reportUrl = "https://api.powerbi.com/v1.0/myorg/groups/" + workspaceId + "/reports/" + reportId;
-    // const reportUrl = "https://api.powerbi.com/v1.0/myorg/reports/" + reportId;
+async function getTileEmbedDetails(token, dashboardId,tileId) {
+    const reportUrl = `https://api.powerbi.com/v1.0/myorg/dashboards/${dashboardId}/tiles/${tileId}`
     const headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": utils.getAuthHeader(token)
@@ -21,22 +20,16 @@ async function getReportEmbedDetails(token, workspaceId, reportId) {
     return result.json();
 }
 
-async function getReportEmbedToken(token, embedData) {
-    console.log(embedData.datasetId,embedData)
-
-    const embedTokenUrl = "https://api.powerbi.com/v1.0/myorg/GenerateToken";
+async function getTileEmbedToken(token, embedData, workspaceId,dashboardId) {
+    const embedTokenUrl = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/dashboards/${dashboardId}/tiles/${embedData.id}/GenerateToken`;
     const headers = {
         "Content-Type": "application/json",
         "Authorization": utils.getAuthHeader(token)
     };
 
     const formData = {
-        "datasets": [{
-            "id": embedData.datasetId
-        }],
-        "reports": [{
-            "id": embedData.id
-        }]
+        "accessLevel":"View",
+        "datasets":[{'id':embedData.datasetId}]
     };
 
     // Used node-fetch to call the PowerBI REST API
@@ -89,21 +82,23 @@ async function generateEmbedToken() {
 
     // Call the function to get the Report Embed details
     try {
-        embedData = await getReportEmbedDetails(token, config.workspaceId, config.reportId);
-
+        embedData = await getTileEmbedDetails(token, config.dashboardId,config.tileID);
+        // console.log(embedData)
         // Call the function to get the Embed Token
-        let embedToken = await getReportEmbedToken(token, embedData);
+        let embedToken = await getTileEmbedToken(token, embedData, config.workspaceId,config.dashboardId);
         return {
             "accessToken": embedToken.token,
             "embedUrl": embedData.embedUrl,
             "expiry": embedToken.expiration,
             "status": 200,
-            "tokenId":embedToken.tokenId,
-            "embedData":embedData      };
+            "tokenId": embedToken.tokenId,
+            "embedData": embedData
+        };
     } catch (err) {
+        console.log(err)
         return {
             "status": err.status,
-            "error": 'Error while retrieving report embed details\r\n' + err.statusText + '\r\nRequestId: \n' + err.headers.get('requestid')
+            "error": 'Error while retrieving report embed details\r\n' + err.statusText + '\r\nRequestId: \n'
         }
     }
 }
