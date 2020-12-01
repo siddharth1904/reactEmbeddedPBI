@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 
 async function getReportEmbedDetails(token, workspaceId, reportId) {
     const reportUrl = "https://api.powerbi.com/v1.0/myorg/groups/" + workspaceId + "/reports/" + reportId;
+    // const reportUrl = "https://api.powerbi.com/v1.0/myorg/reports/" + reportId;
     const headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": utils.getAuthHeader(token)
