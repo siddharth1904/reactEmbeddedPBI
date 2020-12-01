@@ -1,4 +1,4 @@
-let config = require(__dirname + "/../config/config.json");
+let config = require("../config/config.json");
 
 function getAuthHeader(accessToken) {
 

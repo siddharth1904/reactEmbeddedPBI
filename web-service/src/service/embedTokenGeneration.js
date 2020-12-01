@@ -1,6 +1,6 @@
-let auth = require(__dirname + "../utilities/authentication.js");
-let config = require(__dirname + "/../config/config.json");
-let utils = require(__dirname + "../utilities/validateConfig.js");
+let auth = require("../utilities/authentication.js");
+let config = require("../config/config.json");
+let utils = require("../utilities/validateConfig.js");
 const fetch = require('node-fetch');
 
 async function getReportEmbedDetails(token, workspaceId, reportId) {
@@ -94,9 +94,7 @@ async function generateEmbedToken() {
             "accessToken": embedToken.token,
             "embedUrl": embedData.embedUrl,
             "expiry": embedToken.expiration,
-            "status": 200,
-            "embTk":embedToken
-        };
+            "status": 200        };
     } catch (err) {
         return {
             "status": err.status,
