@@ -94,7 +94,8 @@ async function generateEmbedToken() {
             "accessToken": embedToken.token,
             "embedUrl": embedData.embedUrl,
             "expiry": embedToken.expiration,
-            "status": 200        };
+            "status": 200,
+            "tokenId":embedToken.tokenId        };
     } catch (err) {
         return {
             "status": err.status,
