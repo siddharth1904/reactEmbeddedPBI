@@ -35,14 +35,14 @@ export class Tiles extends Component {
                 <h2 className="mb-4 text-center">
                     Power BI Tile in React Application
                 </h2>
-                <div className="card" style={{padding:"20px"}}>
+                {/* <div className="card" style={{padding:"20px"}}> */}
                         {this.state.accessToken!==""&&this.state.embedUrl!==""&&this.state.embedId!==""? <Tile tokenType="Embed" 
                                 accessToken={this.state.accessToken}
                                 embedUrl={this.state.embedUrl}
                                 embedId={this.state.embedId}
                                 dashboardId="d461e7b2-303e-43a7-af96-7e6f2aa18307"
                                 style={this.state.style}/>:null}
-                    </div>
+                    {/* </div> */}
             </div>
         )
     }

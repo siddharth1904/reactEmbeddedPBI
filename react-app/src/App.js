@@ -17,6 +17,15 @@ function App() {
             <ul className="navbar-nav">
               <li className="nav-item active">
                 <a className="nav-link" href="/report">Report</a>
+                </li>
+                <li className="nav-item active">
+
+                <a className="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li className="nav-item active">
+
+                <a className="nav-link" href="/tile">Tile</a>
+
               </li>
               {/* <li className="nav-item">
                 <a className="nav-link" href="/dashboard">Dashboard</a>

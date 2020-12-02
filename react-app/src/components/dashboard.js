@@ -11,7 +11,9 @@ export class Dashboards extends Component {
             embedId:"",
             style:{
                 width:"100%",
-                height:"500px"
+                height:"700px",
+                
+                
             },
             error:""
 
@@ -33,14 +35,14 @@ export class Dashboards extends Component {
                 <h2 className="mb-4 text-center">
                     Power BI Dashboard in React Application
                 </h2>
-                <div className="card" style={{padding:"20px"}}>
+                {/* <div style={{'width':'100%','backgroundColor':'none'}}> */}
                         {this.state.accessToken!==""&&this.state.embedUrl!==""&&this.state.embedId!==""? <Dashboard tokenType="Embed" 
                                 accessToken={this.state.accessToken}
                                 embedUrl={this.state.embedUrl}
                                 embedId={this.state.embedId}
                                 pageView="fitToWidth"
                                 style={this.state.style}/>:null}
-                    </div>
+                    {/* </div> */}
             </div>
         )
     }
